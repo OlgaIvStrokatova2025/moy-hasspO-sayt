@@ -4,13 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ХАССП Конструктор</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide-react@0.263.1/dist/umd/lucide-react.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
     <div id="root"></div>
-    <script src="app.js"></script>
+    <h1 style="color: purple; text-align: center; margin-top: 50px;">
+        🚧 ХАССП Конструктор загружается... 🚧
+    </h1>
+    <script>
+        // Простой тест
+        console.log("Скрипт запущен!");
+        setTimeout(() => {
+            document.body.innerHTML = '<div style="text-align: center; margin-top: 100px;"><h1 style="color: purple;">✅ ТЕСТ РАБОТАЕТ!</h1><p>Если видите это - значит скрипты загружаются!</p></div>';
+        }, 2000);
+    </script>
 </body>
 </html>
