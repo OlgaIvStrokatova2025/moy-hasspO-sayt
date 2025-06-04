@@ -84,24 +84,103 @@
         }
 
         function loadComponents() {
-            // Здесь вставим ваш полный код, но разбитый на части
-            console.log('Загружаем компоненты...');
-            // Пока просто показываем что загрузка завершена
-            setTimeout(() => {
-                document.getElementById('root').innerHTML = `
-                    <div style="background: linear-gradient(135deg, #1e293b 0%, #7c3aed 50%, #1e293b 100%); min-height: 100vh; padding: 20px; color: white;">
-                        <div style="max-width: 800px; margin: 0 auto; text-align: center; padding-top: 100px;">
-                            <h1 style="font-size: 3rem; margin-bottom: 20px;">✅ Полная версия готова!</h1>
-                            <p style="font-size: 1.2rem; margin-bottom: 40px;">Все компоненты успешно загружены</p>
-                            <div style="background: rgba(255,255,255,0.1); padding: 30px; border-radius: 15px;">
-                                <p>Сейчас мы можем безопасно добавить ваш полный код по частям</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }, 2000);
-        }
+    console.log('Загружаем компоненты...');
+    
+    const { useState, useEffect } = React;
+    const { Coffee, Utensils, Store, Building2, Clock, Package, ChefHat, Zap, Check, ChevronRight, ArrowRight, Shield } = lucide;
 
+    const initialFormData = {
+        businessName: '', businessType: '', seatingCapacity: '', kitchenStaff: '', 
+        workSchedule: [], additionalServices: []
+    };
+
+    // Step 1 компонент
+    const Step1 = ({ formData, updateFormData, toggleArrayField }) => {
+        const businessTypes = [
+            { id: 'restaurant', label: 'Ресторан', icon: Utensils },
+            { id: 'cafe', label: 'Кафе', icon: Coffee },
+            { id: 'canteen', label: 'Столовая', icon: Building2 },
+            { id: 'coffeeshop', label: 'Кофейня', icon: Coffee },
+            { id: 'bar', label: 'Бар', icon: Store },
+            { id: 'fastfood', label: 'Фастфуд', icon: Zap }
+        ];
+
+        return React.createElement('div', { className: "space-y-6 fade-in" },
+            React.createElement('h2', { className: "text-2xl font-bold text-white mb-6" }, "Шаг 1: Ваше заведение"),
+            React.createElement('div', null,
+                React.createElement('label', { className: "block text-white font-semibold mb-2" }, "Название заведения"),
+                React.createElement('input', {
+                    type: "text", value: formData.businessName,
+                    onChange: (e) => updateFormData('businessName', e.target.value),
+                    className: "w-full px-4 py-3 rounded-xl bg-white/20 backdrop-blur text-white placeholder-purple-200 border border-white/30 focus:border-purple-400 focus:outline-none",
+                    placeholder: "Введите название вашего заведения"
+                })
+            ),
+            React.createElement('div', null,
+                React.createElement('label', { className: "block text-white font-semibold mb-3" }, "Тип заведения"),
+                React.createElement('div', { className: "grid grid-cols-2 md:grid-cols-3 gap-3" },
+                    businessTypes.map(type =>
+                        React.createElement('button', {
+                            key: type.id,
+                            onClick: () => updateFormData('businessType', type.id),
+                            className: `p-4 rounded-xl border-2 transition-all duration-300 ${
+                                formData.businessType === type.id
+                                    ? 'bg-gradient-to-br from-purple-500 to-pink-500 border-transparent text-white'
+                                    : 'bg-white/10 border-white/30 text-purple-200 hover:bg-white/20'
+                            }`
+                        },
+                            React.createElement(type.icon, { size: 24, className: "mx-auto mb-2" }),
+                            React.createElement('p', { className: "text-sm font-medium" }, type.label)
+                        )
+                    )
+                )
+            )
+        );
+    };
+
+    // Главный компонент
+    const MainApp = () => {
+        const [formData, setFormData] = useState(initialFormData);
+        
+        const updateFormData = (field, value) => {
+            setFormData(prev => ({ ...prev, [field]: value }));
+        };
+
+        const toggleArrayField = (field, value) => {
+            setFormData(prev => ({
+                ...prev,
+                [field]: prev[field]?.includes(value)
+                    ? prev[field].filter(item => item !== value)
+                    : [...(prev[field] || []), value]
+            }));
+        };
+
+        return React.createElement('div', { 
+            className: "min-h-screen",
+            style: { background: 'linear-gradient(135deg, #1e293b 0%, #7c3aed 50%, #1e293b 100%)' }
+        },
+            React.createElement('div', { className: "p-6" },
+                React.createElement('div', { className: "max-w-4xl mx-auto" },
+                    React.createElement('header', { className: "mb-8 text-center" },
+                        React.createElement('h1', { className: "text-3xl font-bold text-white mb-2" }, "🛡️ ХАССП Конструктор"),
+                        React.createElement('p', { className: "text-purple-200" }, "Система пищевой безопасности за 15 минут")
+                    ),
+                    React.createElement('div', { className: "bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20" },
+                        React.createElement(Step1, { formData, updateFormData, toggleArrayField }),
+                        React.createElement('div', { className: "mt-8" },
+                            React.createElement('button', {
+                                onClick: () => alert(`Данные: ${JSON.stringify(formData, null, 2)}`),
+                                className: "px-8 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                            }, "Показать данные")
+                        )
+                    )
+                )
+            )
+        );
+    };
+
+    ReactDOM.render(React.createElement(MainApp), document.getElementById('root'));
+}
         function showError(error) {
             document.getElementById('root').innerHTML = `
                 <div style="background: #1e293b; min-height: 100vh; padding: 20px; color: white; text-align: center;">
