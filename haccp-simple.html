@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>ХАССП Конструктор</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: system-ui; }
+        .gradient-bg { background: linear-gradient(135deg, #1e293b 0%, #7c3aed 50%, #1e293b 100%); }
+    </style>
+</head>
+<body>
+    <div id="root">Загрузка...</div>
+
+    <script>
+        const { useState } = React;
+
+        function App() {
+            const [formData, setFormData] = useState({
+                businessName: '',
+                businessType: ''
+            });
+
+            const updateFormData = (field, value) => {
+                setFormData(prev => ({ ...prev, [field]: value }));
+            };
+
+            return React.createElement('div', { 
+                className: 'gradient-bg',
+                style: { minHeight: '100vh', padding: '20px', color: 'white' }
+            },
+                React.createElement('div', { style: { maxWidth: '800px', margin: '0 auto' } },
+                    React.createElement('h1', { style: { textAlign: 'center', fontSize: '2rem', marginBottom: '30px' } }, 
+                        '🛡️ ХАССП Конструктор'
+                    ),
+                    React.createElement('div', { 
+                        style: { 
+                            background: 'rgba(255,255,255,0.1)', 
+                            padding: '30px', 
+                            borderRadius: '15px' 
+                        } 
+                    },
+                        React.createElement('h2', { style: { marginBottom: '20px' } }, 'Шаг 1: Ваше заведение'),
+                        
+                        React.createElement('div', { style: { marginBottom: '20px' } },
+                            React.createElement('label', { style: { display: 'block', marginBottom: '8px' } }, 'Название заведения:'),
+                            React.createElement('input', {
+                                type: 'text',
+                                value: formData.businessName,
+                                onChange: (e) => updateFormData('businessName', e.target.value),
+                                placeholder: 'Введите название',
+                                style: {
+                                    width: '100%',
+                                    padding: '12px',
+                                    borderRadius: '8px',
+                                    border: 'none',
+                                    fontSize: '16px'
+                                }
+                            })
+                        ),
+                        
+                        React.createElement('div', { style: { marginBottom: '20px' } },
+                            React.createElement('label', { style: { display: 'block', marginBottom: '8px' } }, 'Тип заведения:'),
+                            ['Ресторан', 'Кафе', 'Столовая', 'Бар'].map(type =>
+                                React.createElement('button', {
+                                    key: type,
+                                    onClick: () => updateFormData('businessType', type),
+                                    style: {
+                                        margin: '5px',
+                                        padding: '10px 15px',
+                                        borderRadius: '8px',
+                                        border: '2px solid',
+                                        borderColor: formData.businessType === type ? '#7c3aed' : '#ccc',
+                                        backgroundColor: formData.businessType === type ? '#7c3aed' : 'white',
+                                        color: formData.businessType === type ? 'white' : 'black',
+                                        cursor: 'pointer'
+                                    }
+                                }, type)
+                            )
+                        ),
+                        
+                        React.createElement('button', {
+                            onClick: () => alert(`Название: ${formData.businessName}\nТип: ${formData.businessType}`),
+                            style: {
+                                background: 'linear-gradient(45deg, #7c3aed, #ec4899)',
+                                color: 'white',
+                                padding: '12px 24px',
+                                border: 'none',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                fontSize: '16px'
+                            }
+                        }, 'Показать данные')
+                    )
+                )
+            );
+        }
+
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
+    </script>
+</body>
+</html>
