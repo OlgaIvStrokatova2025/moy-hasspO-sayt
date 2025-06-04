@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ХАССП Конструктор - Система пищевой безопасности</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.6s ease-out; }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #1e293b 0%, #7c3aed 50%, #1e293b 100%); color: white; text-align: center;">
+            <div>
+                <div style="width: 80px; height: 80px; margin: 0 auto 20px; border: 4px solid #a855f7; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <h2>Загружаем ХАССП Конструктор...</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(initializeApp, 1000);
+        });
+
+        function initializeApp() {
+            try {
+                const { useState, useEffect } = React;
+                const { Coffee, Utensils, Store, Building2, Clock, Package, ChefHat, Zap, Check, ChevronRight, ArrowRight, Shield, Thermometer, Sparkles, FileText, Trophy, Download, CheckCircle, Star } = lucide;
+
+                // Ваши данные формы (оптимизированные)
+                const initialFormData = {
+                    businessName: '', businessType: '', seatingCapacity: '', kitchenStaff: '', 
+                    workSchedule: [], additionalServices: [], cookingMethod: '', 
+                    cookingEquipment: [], coldDishes: [], hotDishes: []
+                };
+
+                // Компонент Step 1 (сжатый)
+                const Step1 = ({ formData, updateFormData, toggleArrayField }) => {
+                    const businessTypes = [
+                        { id: 'restaurant', label: 'Ресторан', icon: Utensils },
+                        { id: 'cafe', label: 'Кафе', icon: Coffee },
+                        { id: 'canteen', label: 'Столовая', icon: Building2 },
+                        { id: 'bar', label: 'Бар', icon: Store },
+                        { id: 'fastfood', label: 'Фастфуд', icon: Zap },
+                        { id: 'bakery', label: 'Кондитерская', icon: ChefHat }
+                    ];
+
+                    return React.createElement('div', { className: "space-y-6 fade-in" },
+                        React.createElement('h2', { className: "text-2xl font-bold text-white mb-6" }, "Шаг 1: Ваше заведение"),
+                        
+                        // Название заведения
+                        React.createElement('div', null,
+                            React.createElement('label', { className: "block text-white font-semibold mb-2" }, "Название заведения"),
+                            React.createElement('input', {
+                                type: "text", value: formData.businessName,
+                                onChange: (e) => updateFormData('businessName', e.target.value),
+                                className: "w-full px-4 py-3 rounded-xl bg-white/20 backdrop-blur text-white placeholder-purple-200 border border-white/30 focus:border-purple-400 focus:outline-none",
+                                placeholder: "Введите название вашего заведения"
+                            })
+                        ),
+                        
+                        // Тип заведения
+                        React.createElement('div', null,
+                            React.createElement('label', { className: "block text-white font-semibold mb-3" }, "Тип заведения"),
+                            React.createElement('div', { className: "grid grid-cols-2 md:grid-cols-3 gap-3" },
+                                businessTypes.map(type =>
+                                    React.createElement('button', {
+                                        key: type.id,
+                                        onClick: () => updateFormData('businessType', type.id),
+                                        className: `p-4 rounded-xl border-2 transition-all duration-300 ${
+                                            formData.businessType === type.id
+                                                ? 'bg-gradient-to-br from-purple-500 to-pink-500 border-transparent text-white'
+                                                : 'bg-white/10 border-white/30 text-purple-200 hover:bg-white/20'
+                                        }`
+                                    },
+                                        React.createElement(type.icon, { size: 24, className: "mx-auto mb-2" }),
+                                        React.createElement('p', { className: "text-sm font-medium" }, type.label)
+                                    )
+                                )
+                            )
+                        ),
+                        
+                        // Посадочные места
+                        React.createElement('div', null,
+                            React.createElement('label', { className: "block text-white font-semibold mb-3" }, "Посадочных мест"),
+                            React.createElement('div', { className: "grid grid-cols-2 md:grid-cols-5 gap-3" },
+                                ['Без мест', 'До 30', '31-80', '81-150', '150+'].map(capacity =>
+                                    React.createElement('button', {
+                                        key: capacity,
+                                        onClick: () => updateFormData('seatingCapacity', capacity),
+                                        className: `py-3 px-4 rounded-xl font-medium transition-all duration-300 ${
+                                            formData.seatingCapacity === capacity
+                                                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                                                : 'bg-white/10 text-purple-200 hover:bg-white/20 border border-white/30'
+                                        }`
+                                    }, capacity)
+                                )
+                            )
+                        )
+                    );
+                };
+
+                // Компонент Step 2 (сжатый)
+                const Step2 = ({ formData, updateFormData, toggleArrayField }) => {
+                    return React.createElement('div', { className: "space-y-6 fade-in" },
+                        React.createElement('h2', { className: "text-2xl font-bold text-white mb-6" }, "Шаг 2: Ваша кухня"),
+                        
+                        React.createElement('div', null,
+                            React.createElement('label', { className: "block text-white font-semibold mb-3" }, "Как готовите"),
+                            React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-3" },
+                                [
+                                    { id: 'from-scratch', label: 'Готовим с нуля' },
+                                    { id: 'semi-finished', label: 'Полуфабрикаты' },
+                                    { id: 'mixed', label: 'Смешанно' },
+                                    { id: 'reheat-only', label: 'Только разогрев' }
+                                ].map(method =>
+                                    React.createElement('button', {
+                                        key: method.id,
+                                        onClick: () => updateFormData('cookingMethod', method.id),
+                                        className: `p-4 rounded-xl border-2 transition-all duration-300 ${
+                                            formData.cookingMethod === method.id
+                                                ? 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-purple-400 text-white'
+                                                : 'bg-white/10 border-white/30 hover:bg-white/20 text-purple-200'
+                                        }`
+                                    }, method.label)
+                                )
+                            )
+                        ),
+                        
+                        React.createElement('div', null,
+                            React.createElement('label', { className: "block text-white font-semibold mb-3" }, "Оборудование"),
+                            React.createElement('div', { className: "grid grid-cols-2 md:grid-cols-3 gap-3" },
+                                [
+                                    { id: 'stove', label: 'Плита' },
+                                    { id: 'oven', label: 'Духовка' },
+                                    { id: 'microwave', label: 'СВЧ' },
+                                    { id: 'fryer', label: 'Фритюрница' },
+                                    { id: 'grill', label: 'Гриль' }
+                                ].map(item =>
+                                    React.createElement('label', {
+                                        key: item.id,
+                                        className: `flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-300 ${
+                                            formData.cookingEquipment?.includes(item.id)
+                                                ? 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-purple-400'
+                                                : 'bg-white/10 hover:bg-white/20'
+                                        } border-2 border-white/30`
+                                    },
+                                        React.createElement('input', {
+                                            type: "checkbox",
+                                            checked: formData.cookingEquipment?.includes(item.id) || false,
+                                            onChange: () => toggleArrayField('cookingEquipment', item.id),
+                                            className: "sr-only"
+                                        }),
+                                        React.createElement('span', { className: "text-white font-medium" }, item.label)
+                                    )
+                                )
+                            )
+                        )
+                    );
+                };
+
+                // Компонент Step 3 (сжатый)
+                const Step3 = ({ formData, updateFormData, toggleArrayField }) => {
+                    return React.createElement('div', { className: "space-y-6 fade-in" },
+                        React.createElement('h2', { className: "text-2xl font-bold text-white mb-6" }, "Шаг 3: Ваше меню"),
+                        
+                        React.createElement('div', null,
+                            React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-6" },
+                                React.createElement('div', null,
+                                    React.createElement('p', { className: "text-purple-200 mb-3" }, "Холодные блюда:"),
+                                    ['Салаты', 'Закуски'].map(item =>
+                                        React.createElement('label', {
+                                            key: item,
+                                            className: "flex items-center gap-3 p-3 rounded-xl cursor-pointer mb-2 bg-white/10 border border-white/30 hover:bg-white/20"
+                                        },
+                                            React.createElement('input', {
+                                                type: "checkbox",
+                                                checked: formData.coldDishes?.includes(item) || false,
+                                                onChange: () => toggleArrayField('coldDishes', item),
+                                                className: "w-5 h-5 rounded accent-purple-500"
+                                            }),
+                                            React.createElement('span', { className: "text-white font-medium" }, item)
+                                        )
+                                    )
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('p', { className: "text-purple-200 mb-3" }, "Горячие блюда:"),
+                                    ['Супы', 'Мясные блюда', 'Рыба', 'Пицца'].map(item =>
+                                        React.createElement('label', {
+                                            key: item,
+                                            className: "flex items-center gap-3 p-3 rounded-xl cursor-pointer mb-2 bg-white/10 border border-white/30 hover:bg-white/20"
+                                        },
+                                            React.createElement('input', {
+                                                type: "checkbox",
+                                                checked: formData.hotDishes?.includes(item) || false,
+                                                onChange: () => toggleArrayField('hotDishes', item),
+                                                className: "w-5 h-5 rounded accent-purple-500"
+                                            }),
+                                            React.createElement('span', { className: "text-white font-medium" }, item)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    );
+                };
+
+                // Экран генерации (сжатый)
+                const GeneratingScreen = () => {
+                    const [progress, setProgress] = useState(0);
+                    const [currentAction, setCurrentAction] = useState('Инициализация...');
+
+                    useEffect(() => {
+                        const actions = [
+                            { progress: 25, text: 'Анализ данных...' },
+                            { progress: 50, text: 'Генерация плана ХАССП...' },
+                            { progress: 75, text: 'Создание журналов...' },
+                            { progress: 100, text: 'Завершение...' }
+                        ];
+
+                        actions.forEach((action, index) => {
+                            setTimeout(() => {
+                                setProgress(action.progress);
+                                setCurrentAction(action.text);
+                            }, (index + 1) * 800);
+                        });
+                    }, []);
+
+                    return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-6" },
+                        React.createElement('div', { className: "bg-white/10 backdrop-blur-md rounded-3xl p-12 max-w-2xl w-full text-center border border-white/20" },
+                            React.createElement('div', { className: "w-24 h-24 mx-auto mb-6 relative" },
+                                React.createElement('div', { 
+                                    className: "absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full animate-pulse" 
+                                }),
+                                React.createElement('div', { className: "absolute inset-2 bg-slate-900 rounded-full flex items-center justify-center" },
+                                    React.createElement(Sparkles, { size: 40, className: "text-white animate-spin" })
+                                )
+                            ),
+                            React.createElement('h2', { className: "text-3xl font-bold text-white mb-4" }, "Создаем документы ХАССП"),
+                            React.createElement('p', { className: "text-purple-200 text-lg mb-8" }, currentAction),
+                            React.createElement('div', { className: "bg-white/10 rounded-full h-4 overflow-hidden mb-4" },
+                                React.createElement('div', {
+                                    className: "h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-500",
+                                    style: { width: `${progress}%` }
+                                })
+                            ),
+                            React.createElement('p', { className: "text-purple-300" }, `${progress}% завершено`)
+                        )
+                    );
+                };
+
+                // Экран результата (сжатый)
+                const ResultScreen = ({ formData }) => {
+                    const [email, setEmail] = useState('');
+
+                    return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6" },
+                        React.createElement('div', { className: "max-w-4xl mx-auto pt-12" },
+                            React.createElement('div', { className: "text-center mb-12" },
+                                React.createElement('div', { className: "w-32 h-32 mx-auto mb-6 relative" },
+                                    React.createElement('div', { className: "absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-600 rounded-full animate-pulse" }),
+                                    React.createElement('div', { className: "absolute inset-2 bg-slate-900 rounded-full flex items-center justify-center" },
+                                        React.createElement(Trophy, { size: 64, className: "text-white" })
+                                    )
+                                ),
+                                React.createElement('h1', { className: "text-4xl font-bold text-white mb-4" }, "Документы готовы!"),
+                                React.createElement('p', { className: "text-xl text-purple-200" }, 
+                                    `Система ХАССП для "${formData.businessName || 'вашего заведения'}" создана`
+                                )
+                            ),
+                            
+                            React.createElement('div', { className: "bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 mb-8" },
+                                React.createElement('h2', { className: "text-2xl font-bold text-white mb-6" }, "📄 Что включено:"),
+                                React.createElement('div', { className: "grid md:grid-cols-2 gap-6 mb-6" },
+                                    [
+                                        "✅ План ХАССП (15-20 страниц)",
+                                        "📊 Журналы температурного контроля", 
+                                        "📖 Инструкции для персонала",
+                                        "🎯 Анализ рисков для вашего меню",
+                                        "📋 Процедуры безопасности",
+                                        "🏆 Готовность к проверкам РПН"
+                                    ].map((item, index) =>
+                                        React.createElement('div', { key: index, className: "text-purple-200" }, item)
+                                    )
+                                )
+                            ),
+                            
+                            React.createElement('div', { className: "bg-gradient-to-br from-purple-600 to-pink-600 rounded-3xl p-8 text-center" },
+                                React.createElement('h2', { className: "text-3xl font-bold text-white mb-4" }, "Получите документы сейчас!"),
+                                React.createElement('div', { className: "bg-white/20 rounded-2xl p-6 mb-6 max-w-md mx-auto" },
+                                    React.createElement('div', { className: "text-white mb-4" },
+                                        React.createElement('p', { className: "text-sm line-through opacity-75" }, "19,990₽"),
+                                        React.createElement('div', { className: "flex items-center justify-center gap-3" },
+                                            React.createElement('p', { className: "text-5xl font-bold" }, "9,990₽"),
+                                            React.createElement('div', { className: "bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold" }, "-50%")
+                                        )
+                                    ),
+                                    React.createElement('input', {
+                                        type: "email",
+                                        value: email,
+                                        onChange: (e) => setEmail(e.target.value),
+                                        placeholder: "Ваш email",
+                                        className: "w-full px-4 py-3 rounded-xl mb-4 bg-white/20 text-white placeholder-purple-200 border border-white/30 focus:outline-none"
+                                    })
+                                ),
+                                React.createElement('button', { 
+                                    onClick: () => {
+                                        if (!email) {
+                                            alert('Введите email');
+                                            return;
+                                        }
+                                        alert(`Документы будут отправлены на ${email} после оплаты!`);
+                                    },
+                                    className: "w-full max-w-md py-4 bg-white text-purple-600 font-bold text-lg rounded-xl hover:bg-purple-50 transition-all duration-300"
+                                }, "💳 Оплатить и получить документы")
+                            )
+                        )
+                    );
+                };
+
+                // Главный компонент (оптимизированный)
+                const HACCPConstructor = () => {
+                    const [step, setStep] = useState(1);
+                    const [formData, setFormData] = useState(initialFormData);
+                    const [isGenerating, setIsGenerating] = useState(false);
+                    const [showResult, setShowResult] = useState(false);
+
+                    const updateFormData = (field, value) => {
+                        setFormData(prev => ({ ...prev, [field]: value }));
+                    };
+
+                    const toggleArrayField = (field, value) => {
+                        setFormData(prev => ({
+                            ...prev,
+                            [field]: prev[field]?.includes(value)
+                                ? prev[field].filter(item => item !== value)
+                                : [...(prev[field] || []), value]
+                        }));
+                    };
+
+                    const handleNext = () => {
+                        if (step < 3) {
+                            setStep(step + 1);
+                        } else {
+                            generateDocuments();
+                        }
+                    };
+
+                    const handleBack = () => {
+                        if (step > 1) setStep(step - 1);
+                    };
+
+                    const generateDocuments = () => {
+                        setIsGenerating(true);
+                        setTimeout(() => {
+                            setIsGenerating(false);
+                            setShowResult(true);
+                        }, 3200);
+                    };
+
+                    if (showResult) {
+                        return React.createElement(ResultScreen, { formData });
+                    }
+
+                    if (isGenerating) {
+                        return React.createElement(GeneratingScreen);
+                    }
+
+                    return React.createElement('div', { className: "min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" },
+                        React.createElement('div', { className: "relative z-10" },
+                            React.createElement('header', { className: "px-6 py-8" },
+                                React.createElement('div', { className: "max-w-6xl mx-auto text-center" },
+                                    React.createElement('h1', { className: "text-3xl font-bold text-white mb-2" }, "🛡️ ХАССП Конструктор"),
+                                    React.createElement('p', { className: "text-purple-200" }, "Система пищевой безопасности за 15 минут"),
+                                    React.createElement('div', { className: "flex justify-center items-center gap-4 mt-6" },
+                                        [1, 2, 3].map(num =>
+                                            React.createElement('div', { key: num, className: "flex items-center" },
+                                                React.createElement('div', {
+                                                    className: `w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                                                        step >= num
+                                                            ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white'
+                                                            : 'bg-white/10 text-purple-300'
+                                                    }`
+                                                }, step > num ? React.createElement(Check, { size: 20 }) : num),
+                                                num < 3 && React.createElement(ChevronRight, { size: 16, className: "text-purple-400 mx-2" })
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            React.createElement('main', { className: "px-6 pb-12" },
+                                React.createElement('div', { className: "max-w-4xl mx-auto" },
+                                    React.createElement('div', { className: "bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20" },
+                                        step === 1 && React.createElement(Step1, { formData, updateFormData, toggleArrayField }),
+                                        step === 2 && React.createElement(Step2, { formData, updateFormData, toggleArrayField }),
+                                        step === 3 && React.createElement(Step3, { formData, updateFormData, toggleArrayField }),
+                                        React.createElement('div', { className: "flex justify-between mt-8" },
+                                            React.createElement('button', {
+                                                onClick: handleBack,
+                                                className: step === 1 ? 'opacity-0' : 'px-6 py-3 rounded-xl font-semibold bg-white/10 text-white hover:bg-white/20'
+                                            }, "← Назад"),
+                                            React.createElement('button', {
+                                                onClick: handleNext,
+                                                className: "px-8 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 flex items-center gap-2"
+                                            },
+                                                step === 3 ? 'Создать документы' : 'Далее',
+                                                React.createElement(ArrowRight, { size: 20 })
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    );
+                };
+
+                // Запуск приложения
+                ReactDOM.render(React.createElement(HACCPConstructor), document.getElementById('root'));
+
+            } catch (error) {
+                console.error("Ошибка:", error);
+                document.getElementById('root').innerHTML = `
+                    <div style="text-align: center; padding: 50px; color: white; background: #1e293b; min-height: 100vh;">
+                        <h1>❌ Ошибка загрузки</h1>
+                        <p>${error.message}</p>
+                        <button onclick="location.reload()" style="background: #7c3aed; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">
+                            Перезагрузить
+                        </button>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
