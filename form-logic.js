@@ -466,3 +466,44 @@ window.toggleOption = toggleOption;
 window.toggleSameAddress = toggleSameAddress;
 window.continueFromSaved = continueFromSaved;
 window.startFresh = startFresh;
+function loadStepContent(step) {
+    const stepContentEl = document.getElementById('stepContent');
+    if (!stepContentEl) return;
+    
+    let content = '';
+    
+    // Вызываем соответствующую функцию генерации контента
+    switch(step) {
+        case 1:
+            content = typeof generateStep1Content === 'function' ? generateStep1Content() : '<p>Контент загружается...</p>';
+            break;
+        case 2:
+            content = typeof generateStep2Content === 'function' ? generateStep2Content() : '<p>Контент загружается...</p>';
+            break;
+        case 3:
+            content = typeof generateStep3Content === 'function' ? generateStep3Content() : '<p>Контент загружается...</p>';
+            break;
+        case 4:
+            content = typeof generateStep4Content === 'function' ? generateStep4Content() : '<p>Контент загружается...</p>';
+            break;
+        case 5:
+            content = typeof generateStep5Content === 'function' ? generateStep5Content() : '<p>Контент загружается...</p>';
+            break;
+        case 6:
+            content = typeof generateStep6Content === 'function' ? generateStep6Content() : '<p>Контент загружается...</p>';
+            break;
+        case 7:
+            content = typeof generateStep7Content === 'function' ? generateStep7Content() : '<p>Контент загружается...</p>';
+            break;
+        case 8:
+            content = typeof generateStep8Content === 'function' ? generateStep8Content() : '<p>Контент загружается...</p>';
+            break;
+        default:
+            content = '<p>Неизвестный шаг</p>';
+    }
+    
+    stepContentEl.innerHTML = content;
+    
+    // Восстанавливаем данные после загрузки контента
+    setTimeout(() => restoreStepData(step), 100);
+}
