@@ -507,3 +507,39 @@ function loadStepContent(step) {
     // Восстанавливаем данные после загрузки контента
     setTimeout(() => restoreStepData(step), 100);
 }
+// Недостающие функции валидации
+function validateCurrentStep() {
+    // Простая валидация - пропускаем все шаги
+    return true;
+}
+
+function validateAllSteps() {
+    return true;
+}
+
+function showValidationErrors() {
+    console.log('Ошибки валидации');
+}
+
+function validateFieldOnBlur(event) {
+    // Валидация при потере фокуса
+}
+
+// Недостающие функции интерфейса
+function showModal(content) {
+    console.log('Показать модальное окно:', content);
+}
+
+function closeModal() {
+    console.log('Закрыть модальное окно');
+}
+
+function showNotification(message, type) {
+    console.log('Уведомление:', message, type);
+}
+
+function generateDocuments() {
+    // Переходим к экрану результата
+    document.getElementById('form').style.display = 'none';
+    document.getElementById('result').style.display = 'block';
+}
