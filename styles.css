@@ -36,3 +36,14 @@
 .hidden {
     display: none !important;
 }
+.hidden {
+    display: none !important;
+}
+
+#form {
+    display: none;
+}
+
+#form.show {
+    display: block;
+}
