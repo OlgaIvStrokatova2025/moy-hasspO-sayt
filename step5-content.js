@@ -1,6 +1,6 @@
 // step5-content.js - Блок 5: Уборка и санитария
 
-function getStep5Content() {
+function generateStep5Content() {
     return `
         <h3>5.1 Организация уборки</h3>
         
@@ -335,7 +335,7 @@ window.handleCleaningCertsUpload = handleCleaningCertsUpload;
 
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { 
-        getStep5Content, 
+        generateStep5Content, 
         validateStep5,
         updateCleaningHints,
         validateCleaningSupplies,
