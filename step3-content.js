@@ -1,6 +1,6 @@
 // step3-content.js - Блок 3: Кухня и технологические процессы
 
-function getStep3Content() {
+function generateStep3Content() {
     return `
         <h3>3.1 Тип производства</h3>
         
@@ -476,7 +476,7 @@ window.handleLayoutUpload = handleLayoutUpload;
 
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { 
-        getStep3Content, 
+        generateStep3Content, 
         validateStep3,
         updateProductionTypeHints,
         updateCuisineHints,
