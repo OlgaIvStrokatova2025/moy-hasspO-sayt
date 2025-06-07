@@ -12,7 +12,7 @@
     <meta property="og:title" content="ХАССП Конструктор">
     <meta property="og:description" content="Создайте систему ХАССП за 30-45 минут">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://olgaivstrokatova2025.github.io/moy-hasspO-sayt/">
+    <meta property="og:url" content="https://moyhassp.netlify.app/">
 </head>
 <body>
     <div class="container">
@@ -63,7 +63,7 @@
                     <p>Максимум выпадающих списков, минимум ручного ввода</p>
                 </div>
                 
-                <button class="btn btn-primary btn-large" onclick="startForm()">
+                <button class="btn btn-primary btn-large" id="startButton">
                     🚀 Начать создание системы ХАССП
                 </button>
             </div>
@@ -100,10 +100,10 @@
                 <div id="validationMessages"></div>
                 
                 <div class="nav-buttons">
-                    <button id="backBtn" class="btn btn-secondary" onclick="prevStep()" style="display: none;">
+                    <button id="backBtn" class="btn btn-secondary" style="display: none;">
                         ← Назад
                     </button>
-                    <button id="nextBtn" class="btn btn-primary" onclick="nextStep()">
+                    <button id="nextBtn" class="btn btn-primary">
                         Далее →
                     </button>
                 </div>
@@ -175,5 +175,58 @@
     <script src="pdf-generator.js"></script>
     <script src="payment.js"></script>
     <script src="form-logic.js"></script>
+
+    <!-- ГЛАВНОЕ ИСПРАВЛЕНИЕ - инициализация -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('=== СТРАНИЦА ЗАГРУЖЕНА ===');
+        
+        // Находим кнопку "Начать"
+        const startButton = document.getElementById('startButton');
+        if (startButton) {
+            console.log('✅ Кнопка "Начать" найдена');
+            
+            // Привязываем обработчик
+            startButton.addEventListener('click', function() {
+                console.log('🚀 Кнопка нажата!');
+                
+                // Проверяем загружены ли функции
+                if (typeof startForm === 'function') {
+                    console.log('✅ Функция startForm найдена');
+                    startForm();
+                } else {
+                    console.error('❌ Функция startForm не найдена');
+                    alert('Ошибка: JavaScript функции не загружены');
+                }
+            });
+            
+            console.log('✅ Обработчик событий привязан');
+        } else {
+            console.error('❌ Кнопка "Начать" не найдена');
+        }
+        
+        // Привязываем обработчики к кнопкам навигации
+        const nextBtn = document.getElementById('nextBtn');
+        const backBtn = document.getElementById('backBtn');
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                if (typeof nextStep === 'function') {
+                    nextStep();
+                }
+            });
+        }
+        
+        if (backBtn) {
+            backBtn.addEventListener('click', function() {
+                if (typeof prevStep === 'function') {
+                    prevStep();
+                }
+            });
+        }
+        
+        console.log('=== ИНИЦИАЛИЗАЦИЯ ЗАВЕРШЕНА ===');
+    });
+    </script>
 </body>
 </html>
