@@ -1,6 +1,6 @@
 // step6-content.js - Блок 6: Меню и технологические карты
 
-function getStep6Content() {
+function generateStep6Content() {
     return `
         <h3>6.1 Наличие технологических карт</h3>
         
@@ -150,5 +150,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { getStep6Content, validateStep6, validateTTC, updateCookingWarnings };
+    module.exports = { generateStep6Content, validateStep6, validateTTC, updateCookingWarnings };
 }
