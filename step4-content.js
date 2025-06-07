@@ -1,6 +1,6 @@
 // step4-content.js - Блок 4: Оборудование и инфраструктура
 
-function getStep4Content() {
+function generateStep4Content() {
     return `
         <h3>4.1 Основное кухонное оборудование</h3>
         
@@ -174,5 +174,5 @@ function validateStep4() {
 window.toggleEquipment = toggleEquipment;
 
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { getStep4Content, validateStep4, toggleEquipment };
+    module.exports = { generateStep4Content, validateStep4, toggleEquipment };
 }
