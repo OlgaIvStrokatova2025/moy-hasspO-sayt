@@ -1,6 +1,6 @@
 // step7-content.js - Блок 7: Поставщики и логистика
 
-function getStep7Content() {
+function generateStep7Content() {
     return `
         <h3>7.1 Поставщики продуктов</h3>
         
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Экспорт функций
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { 
-        getStep7Content, 
+        generateStep7Content, 
         validateStep7,
         updateSuppliersHints,
         updateScheduleHints,
